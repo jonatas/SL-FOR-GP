@@ -1,0 +1,70 @@
+Hoje preciso fazer uma prova usando as fórmulas para encontrar o custo (eac) e tempo (eact) total para completar o projeto.
+
+Para não demorar ao fazer os cálculos com as várias suposições, criei uma macro para hp12c poder simular as diversas várições do projeto.
+
+Sabendo que em um projeto de exemplo irá demorar 12 meses (Tt) para ficar pronto, em um orçamento de R$ 23012,50 (bac), deve ser cálculado o custo e o tempo do projeto com base no tempo realizado em meses (tr), custo real do trabalho realizado (ac) e percentual de evolução do projeto (evolucao).
+
+Com base nos dados acima e nas fórmulas sugeridas:
+
+bac = 23_012.50 
+
+percentual_evolucao = 10 % do bac
+ac  = 10 % do bac
+tr  = 10 % do Tt
+
+Com base nos dados acima é possível cálcular os dados usando a seguinte instrução:
+
+23012.50 sto 1 # bac na variavel 1
+12 sto 2        # Tt  na variavel 2
+10 sto 3         # Tr na variavel 3 
+10 sto 4         # Ac na variavel 4 
+8 sto 5         # percentual_evolucao na variavel 5
+rcl 1 rcl 5 % sto 5 # ev - valor da evolucao e coloca na variavel 5
+rcl 1 rcl 4 % sto 4 # ac - custo da evolução na variável 4
+rcl 2 rcl 3 / sto 3 # tr - valor do trabalho realizado na variável 6
+rcl 1 rcl 2 / rcl 3 * sto 6 # pv - valor planejado na variável 6
+rcl 5 rcl 4 / sto 7 # cpi - indice de desempenho em relacao ao custo na var. 7
+rcl 5 rcl 6 / sto 8 # spi - indice de desempenho em relacao ao tempo na var. 7
+rcl 1 rcl 7 / sto 7 # custo total para completar o projeto na var 7
+rcl 2 rcl 8 / sto 8 # tempo total para completar o projeto na var 8
+
+através do comando rcl 8 e rcl 7 é possível saber o custo e tempo planejado para terminar o projeto baseado nas fórmulas propostas.
+
+Para usar como uma macro é necessário apenas colocar os comandos de inicialização e termino do programa:
+
+f p/r # inicia o modo programação
+f prgm # limpa a memoria de programação
+rcl 1 rcl 5 % sto 5 # ev - valor da evolucao e coloca na variavel 5
+rcl 1 rcl 4 % sto 4 # ac - custo da evolução na variável 4
+rcl 2 rcl 3 / sto 3 # tr - valor do trabalho realizado na variável 6
+rcl 1 rcl 2 / rcl 3 * sto 6 # pv - valor planejado na variável 6
+rcl 5 rcl 4 / sto 7 # cpi - indice de desempenho em relacao ao custo na var. 7
+rcl 5 rcl 6 / sto 8 # spi - indice de desempenho em relacao ao tempo na var. 7
+rcl 1 rcl 7 / sto 7 # custo total para completar o projeto na var 7
+rcl 2 rcl 8 / sto 8 # tempo total para completar o projeto na var 8
+f p/r # termina o modo programação 
+
+agora é necessário fazer o processo completo executando a macro:
+
+desde o início:
+
+# passo 1: adicionando os valores referentes ao tempo e custo total do projeto:
+
+f clx # limpa os registradores
+23012.5 sto 1 # armazena o bac
+12 sto 2        # Tt  na variavel 2
+
+# passo 2: adicionando informações sobre a situação atual:
+
+10 sto 3         # 10 % de trabalho realizado na variavel 3  
+10 sto 4         # 10 % de custo real para execução na variavel 4 
+8 sto 5         # percentual de evolução (8%) na variavel 5
+
+#passo 3: agora é necessário apenas executar a macro usando o comando R/S
+
+para resgatar os valores interessantes eac e eact é necessário consultar as variáveis 8 e 9
+rcl 8 # eac
+rcl 9 # eact
+
+para completar a tabela é só atribuir a situação atual e seguir o processo a partir do passo 2 
+
